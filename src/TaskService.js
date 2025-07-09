@@ -15,5 +15,13 @@ class TaskService{
     getAllTasks() {
     return axios.get(`${this.Base_url}/tasks`);
   }
+
+   updateTask(id, updatedTask) {
+    return axios.put(`${this.Base_url}/task/${id}`, updatedTask);
+  }
+
+  deleteTask(id) {
+    return axios.delete(`${this.Base_url}/task/${id}`);
+  }
 }
 export default new TaskService();

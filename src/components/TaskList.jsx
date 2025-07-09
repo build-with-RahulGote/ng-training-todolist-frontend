@@ -115,16 +115,31 @@ export default function TaskList() {
               <td>{task.priority}</td>
               <td>{task.description}</td>
               <td>
-                <div className="dropdown">
-                  <button className="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown">
-                    ▾
-                  </button>
-                  <ul className="dropdown-menu">
-                    <li><button className="dropdown-item" onClick={() => handleEdit(task)}>Edit</button></li>
-                    <li><button className="dropdown-item text-danger" onClick={() => handleDeleteClick(task)}>Delete</button></li>
-                  </ul>
-                </div>
-              </td>
+  <div className="dropdown">
+    <button
+      className="btn btn-sm btn-light dropdown-toggle"
+      type="button"
+      id={`dropdownMenuButton-${task.id}`}
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      ▾
+    </button>
+    <ul className="dropdown-menu" aria-labelledby={`dropdownMenuButton-${task.id}`}>
+      <li>
+        <button className="dropdown-item" onClick={() => handleEdit(task)}>
+          <i className="bi bi-pencil me-2"></i> Edit
+        </button>
+      </li>
+      <li>
+        <button className="dropdown-item text-danger" onClick={() => handleDeleteClick(task)}>
+          <i className="bi bi-trash3 me-2"></i> Delete
+        </button>
+      </li>
+    </ul>
+  </div>
+</td>
+
             </tr>
           ))}
         </tbody>
