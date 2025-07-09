@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button, Table, Dropdown, Form, InputGroup, Pagination } from "react-bootstrap";
 import TaskFormModal from "./TaskFormModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
 
@@ -38,34 +37,46 @@ export default function TaskList() {
   };
 
   return (
-  <div className="container-fluid mt-4 border p-3 rounded shadow-sm bg-white">
+   <div className="container-fluid mt-4 border p-3 rounded shadow-sm bg-white">
 
-      <div className="d-flex justify-content-between align-items-center mb-3">
-        <div>
-          <h5 className="mb-0">
-            <i className="bi bi-list-task text-danger me-2"></i> Tasks
-          </h5>
-          <small className="text-muted">All Tasks</small>
-          <div className="text-muted">{tasks.length} records</div>
-        </div>
+  <div className="d-flex justify-content-between align-items-start mb-2">
+    <div>
+      <h5 className="mb-0">
+        <i className="bi bi-list-task text-danger me-2"></i> Tasks
+      </h5>
+      <small className="text-muted">All Tasks</small>
+      <div className="text-muted">{tasks.length} records</div>
+    </div>
 
-        <div className="d-flex gap-2">
-          <Button variant="warning" onClick={() => { setModalMode("create"); setTaskToEdit(null); setShowModal(true); }}>New Task</Button>
-          <Button variant="warning">Refresh</Button>
-        </div>
-      </div>
+    <div className="d-flex align-items-center gap-2">
+      <button
+        className="btn btn-warning"
+        onClick={() => {
+          setModalMode("create");
+          setTaskToEdit(null);
+          setShowModal(true);
+        }}
+      >
+        New Task
+      </button>
+      <button className="btn btn-warning">Refresh</button>
+    </div>
+  </div>
 
-      <InputGroup className="mb-3 w-25">
-        <Form.Control placeholder="Search" />
-        <Button variant="outline-secondary">
-          <i className="bi bi-search"></i>
-        </Button>
-      </InputGroup>
 
-      <Table bordered hover responsive>
+  <div className="mb-3 d-flex justify-content-end">
+    <div className="input-group w-25">
+      <input type="text" className="form-control" placeholder="Search" />
+      <button className="btn btn-outline-secondary">
+        <i className="bi bi-search"></i>
+      </button>
+    </div>
+  </div>
+
+      <table className="table table-bordered table-hover table-responsive">
         <thead className="table-light">
           <tr>
-            <th><Form.Check type="checkbox" /></th>
+            <th><input type="checkbox" /></th>
             <th>Assigned To</th>
             <th>Status</th>
             <th>Due Date</th>
@@ -77,40 +88,44 @@ export default function TaskList() {
         <tbody>
           {tasks.map((task) => (
             <tr key={task.id}>
-              <td><Form.Check type="checkbox" /></td>
+              <td><input type="checkbox" /></td>
               <td><a href="#">{task.assignedTo}</a></td>
               <td>{task.status}</td>
               <td>{task.dueDate}</td>
               <td>{task.priority}</td>
               <td>{task.description}</td>
               <td>
-                <Dropdown>
-                  <Dropdown.Toggle variant="light" size="sm">▾</Dropdown.Toggle>
-                  <Dropdown.Menu>
-                    <Dropdown.Item onClick={() => handleEdit(task)}>Edit</Dropdown.Item>
-                    <Dropdown.Item className="text-danger" onClick={() => handleDeleteClick(task)}>Delete</Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <div className="dropdown">
+                  <button className="btn btn-sm btn-light dropdown-toggle" data-bs-toggle="dropdown">
+                    ▾
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li><button className="dropdown-item" onClick={() => handleEdit(task)}>Edit</button></li>
+                    <li><button className="dropdown-item text-danger" onClick={() => handleDeleteClick(task)}>Delete</button></li>
+                  </ul>
+                </div>
               </td>
             </tr>
           ))}
         </tbody>
-      </Table>
+      </table>
 
       <div className="d-flex justify-content-between align-items-center mt-3">
-        <Form.Select style={{ width: "80px" }}>
+        <select className="form-select w-auto">
           <option>20</option>
           <option>50</option>
           <option>100</option>
-        </Form.Select>
+        </select>
 
-        <Pagination className="mb-0">
-          <Pagination.First />
-          <Pagination.Prev />
-          <Pagination.Item active>{1}</Pagination.Item>
-          <Pagination.Next />
-          <Pagination.Last />
-        </Pagination>
+        <nav>
+          <ul className="pagination mb-0">
+            <li className="page-item"><a className="page-link" href="#">«</a></li>
+            <li className="page-item"><a className="page-link" href="#">‹</a></li>
+            <li className="page-item active"><a className="page-link" href="#">1</a></li>
+            <li className="page-item"><a className="page-link" href="#">›</a></li>
+            <li className="page-item"><a className="page-link" href="#">»</a></li>
+          </ul>
+        </nav>
       </div>
 
       <TaskFormModal

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Button, Form, Row, Col } from "react-bootstrap";
 
 const initialFormState = {
   assignedTo: "",
@@ -32,70 +31,103 @@ export default function TaskFormModal({ show, onClose, onSave, mode = "create", 
   };
 
   return (
-    <Modal show={show} onHide={onClose} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>{mode === "edit" ? "Edit Task" : "New Task"}</Modal.Title>
-      </Modal.Header>
+    <div
+      className={`modal fade ${show ? "show d-block" : "d-none"}`}
+      tabIndex="-1"
+      role="dialog"
+      style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+    >
+      <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div className="modal-content">
+          <div className="modal-header">
+            <h5 className="modal-title">{mode === "edit" ? "Edit Task" : "New Task"}</h5>
+            <button type="button" className="btn-close" onClick={onClose}></button>
+          </div>
 
-      <Modal.Body>
-        <Form>
-          <Row className="mb-3">
-            <Col>
-              <Form.Group>
-                <Form.Label><span className="text-danger">*</span> Assigned To</Form.Label>
-                <Form.Select name="assignedTo" value={taskData.assignedTo} onChange={handleChange}>
-                  <option value="">Select</option>
-                  <option>User 1</option>
-                  <option>User 2</option>
-                  <option>User 3</option>
-                  <option>User 4</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
+          <div className="modal-body">
+            <form>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">
+                    <span className="text-danger">*</span> Assigned To
+                  </label>
+                  <select
+                    className="form-select"
+                    name="assignedTo"
+                    value={taskData.assignedTo}
+                    onChange={handleChange}
+                  >
+                    <option value="">Select</option>
+                    <option>User 1</option>
+                    <option>User 2</option>
+                    <option>User 3</option>
+                    <option>User 4</option>
+                  </select>
+                </div>
 
-            <Col>
-              <Form.Group>
-                <Form.Label><span className="text-danger">*</span> Status</Form.Label>
-                <Form.Select name="status" value={taskData.status} onChange={handleChange}>
-                  <option>Not Started</option>
-                  <option>In Progress</option>
-                  <option>Completed</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
+                <div className="col-md-6">
+                  <label className="form-label">
+                    <span className="text-danger">*</span> Status
+                  </label>
+                  <select
+                    className="form-select"
+                    name="status"
+                    value={taskData.status}
+                    onChange={handleChange}
+                  >
+                    <option>Not Started</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                  </select>
+                </div>
+              </div>
 
-          <Row className="mb-3">
-            <Col>
-              <Form.Group>
-                <Form.Label>Due Date</Form.Label>
-                <Form.Control type="date" name="dueDate" value={taskData.dueDate} onChange={handleChange} />
-              </Form.Group>
-            </Col>
+              <div className="row mb-3">
+                <div className="col-md-6">
+                  <label className="form-label">Due Date</label>
+                  <input
+                    type="date"
+                    className="form-control"
+                    name="dueDate"
+                    value={taskData.dueDate}
+                    onChange={handleChange}
+                  />
+                </div>
 
-            <Col>
-              <Form.Group>
-                <Form.Label>Priority</Form.Label>
-                <Form.Select name="priority" value={taskData.priority} onChange={handleChange}>
-                  <option>Low</option>
-                  <option>Normal</option>
-                  <option>High</option>
-                </Form.Select>
-              </Form.Group>
-            </Col>
-          </Row>
+                <div className="col-md-6">
+                  <label className="form-label">Priority</label>
+                  <select
+                    className="form-select"
+                    name="priority"
+                    value={taskData.priority}
+                    onChange={handleChange}
+                  >
+                    <option>Low</option>
+                    <option>Normal</option>
+                    <option>High</option>
+                  </select>
+                </div>
+              </div>
 
-          <Form.Group className="mb-3">
-            <Form.Label>Description</Form.Label>
-            <Form.Control as="textarea" rows={3} name="description" value={taskData.description} onChange={handleChange} />
-          </Form.Group>
-        </Form>
-      </Modal.Body>
+              <div className="mb-3">
+                <label className="form-label">Description</label>
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  name="description"
+                  value={taskData.description}
+                  onChange={handleChange}
+                ></textarea>
+              </div>
+            </form>
+          </div>
 
-      <Modal.Footer>
-        <Button variant="warning" onClick={onClose}>Cancel</Button>
-        <Button variant="success" onClick={handleSubmit}>Save</Button>
-      </Modal.Footer>
-    </Modal>
+          <div className="modal-footer">
+            <button type="button" className="btn btn-warning" onClick={onClose}>Cancel</button>
+            <button type="button" className="btn btn-success" onClick={handleSubmit}>Save</button>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
