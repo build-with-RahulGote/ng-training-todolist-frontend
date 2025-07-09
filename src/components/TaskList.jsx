@@ -155,42 +155,45 @@ useEffect(() => {
       </table>
 
       {/* Pagination */}
-      <div className="d-flex justify-content-between align-items-center mt-3">
-  <select
-  className="form-select w-auto"
-  value={pageSize}
-  onChange={(e) => {
-    setPageSize(Number(e.target.value));
-    setPage(0); // Reset to first page when size changes
-  }}
->
-  <option value="5">5</option>
-  <option value="10">10</option>
-  <option value="20">20</option>
-</select>
+    <div className="d-flex justify-content-between align-items-center mt-3">
+  {/* Page size selector */}
+  <div className="d-flex align-items-center">
+    <select
+      className="form-select form-select-sm w-auto"
+      value={pageSize}
+      onChange={(e) => {
+        setPageSize(Number(e.target.value));
+        setPage(0);
+      }}
+    >
+      <option value="5">5</option>
+      <option value="10">10</option>
+      <option value="20">20</option>
+    </select>
+  </div>
 
-  <ul className="pagination mb-0">
-    <li className={`page-item ${page === 0 ? 'disabled' : ''}`}>
-      <button className="page-link" onClick={() => handlePageChange(0)}>&laquo;</button>
-    </li>
-    <li className={`page-item ${page === 0 ? 'disabled' : ''}`}>
-      <button className="page-link" onClick={() => handlePageChange(page - 1)}>&lsaquo;</button>
-    </li>
-
-    {[...Array(totalPages)].map((_, i) => (
-      <li key={i} className={`page-item ${i === page ? 'active' : ''}`}>
-        <button className="page-link" onClick={() => handlePageChange(i)}>{i + 1}</button>
+  {/* Pagination controls */}
+  <nav>
+    <ul className="pagination pagination-sm mb-0">
+      <li className={`page-item ${page === 0 ? 'disabled' : ''}`}>
+        <button className="page-link" onClick={() => handlePageChange(0)}>« First</button>
       </li>
-    ))}
-
-    <li className={`page-item ${page === totalPages - 1 ? 'disabled' : ''}`}>
-      <button className="page-link" onClick={() => handlePageChange(page + 1)}>&rsaquo;</button>
-    </li>
-    <li className={`page-item ${page === totalPages - 1 ? 'disabled' : ''}`}>
-      <button className="page-link" onClick={() => handlePageChange(totalPages - 1)}>&raquo;</button>
-    </li>
-  </ul>
+      <li className={`page-item ${page === 0 ? 'disabled' : ''}`}>
+        <button className="page-link" onClick={() => handlePageChange(page - 1)}>‹ Prev</button>
+      </li>
+      <li className="page-item active">
+        <span className="page-link">{page + 1}</span>
+      </li>
+      <li className={`page-item ${page === totalPages - 1 ? 'disabled' : ''}`}>
+        <button className="page-link" onClick={() => handlePageChange(page + 1)}>Next ›</button>
+      </li>
+      <li className={`page-item ${page === totalPages - 1 ? 'disabled' : ''}`}>
+        <button className="page-link" onClick={() => handlePageChange(totalPages - 1)}>Last »</button>
+      </li>
+    </ul>
+  </nav>
 </div>
+
       <TaskFormModal show={showModal} onClose={() => setShowModal(false)} onSave={handleSaveTask}
         mode={modalMode} taskDataToEdit={taskToEdit} />
 
