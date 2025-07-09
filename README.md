@@ -1,12 +1,37 @@
-# React + Vite
+# 📝 To-Do List App – Frontend (React + Vite)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the **frontend** of the To-Do List application developed using **React.js**, **Vite**, and **Axios**. It is part of the Enzigma Solutions LLP assignment for the **App Developer** role.
 
-Currently, two official plugins are available:
+The app allows users to manage tasks with full **CRUD operations** (Create, Read, Update, Delete) and supports **searching** tasks by keyword.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Tech Stack
 
-## Expanding the ESLint configuration
+- ⚛️ React.js
+- ⚡ Vite (for fast build and dev environment)
+- 🧾 Axios (for HTTP requests)
+- 🎨 Bootstrap (for styling)
+- 🔄 State Management using React Hooks (`useState`, `useEffect`)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 📦 Features
+
+- ➕ Add new tasks  
+- 📋 View list of all tasks  
+- ✏️ Update existing tasks  
+- ❌ Delete tasks  
+- 🔍 Search tasks by keyword  
+- 📱 Responsive UI (mobile + desktop friendly)
+
+---
+
+## 📁 Folder Structure
+src/
+├── components/
+│ ├── TaskList.jsx
+│ ├── TaskFormModal.jsx
+│ ├── DeleteConfirmModal.jsx
+|── TaskService.js
+├── App.jsx
+├── main.jsx
+
