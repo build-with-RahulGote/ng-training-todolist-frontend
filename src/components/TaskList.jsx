@@ -1,20 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import TaskFormModal from "./TaskFormModal";
 import DeleteConfirmModal from "./DeleteConfirmModal";
-
+import TaskService from "../TaskService";
 export default function TaskList() {
+  const [tasks, setTasks] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState("create");
   const [taskToEdit, setTaskToEdit] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [taskToDelete, setTaskToDelete] = useState(null);
 
-  const tasks = [
-    { id: 1, assignedTo: "User 1", status: "Completed", dueDate: "2024-10-12", priority: "Low", description: "This task is good" },
-    { id: 2, assignedTo: "User 2", status: "In Progress", dueDate: "2024-09-14", priority: "High", description: "This" },
-    { id: 3, assignedTo: "User 3", status: "Not Started", dueDate: "2024-08-18", priority: "Low", description: "This" },
-    { id: 4, assignedTo: "User 4", status: "In Progress", dueDate: "2024-06-12", priority: "Normal", description: "This task is good" }
-  ];
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = () => {
+  TaskService.getAllTasks()
+    .then((res) => {
+      console.log("Fetched Tasks:", res.data); 
+      setTasks(res.data);
+    })
+    .catch((err) => console.error("Error fetching tasks:", err));  
+};
 
   const handleEdit = (task) => {
     setModalMode("edit");
@@ -28,12 +35,25 @@ export default function TaskList() {
   };
 
   const confirmDelete = () => {
-    console.log("Deleted:", taskToDelete);
-    setShowDeleteModal(false);
+    TaskService.deleteTask(taskToDelete.id)
+      .then(() => {
+        fetchTasks(); // Reload list
+        setShowDeleteModal(false);
+      })
+      .catch((err) => console.error("Delete failed:", err));
   };
 
   const handleSaveTask = (task) => {
-    console.log(modalMode === "edit" ? "Updated:" : "Created:", task);
+    if (modalMode === "edit") {
+      TaskService.updateTask(task.id, task)
+        .then(() => fetchTasks())
+        .catch((err) => console.error("Update failed:", err));
+    } else {
+      TaskService.createTask(task)
+        .then(() => fetchTasks())
+        .catch((err) => console.error("Create failed:", err));
+    }
+    setShowModal(false);
   };
 
   return (
@@ -89,7 +109,7 @@ export default function TaskList() {
           {tasks.map((task) => (
             <tr key={task.id}>
               <td><input type="checkbox" /></td>
-              <td><a href="#">{task.assignedTo}</a></td>
+              <td><a href="#">{task.assignTo}</a></td>
               <td>{task.status}</td>
               <td>{task.dueDate}</td>
               <td>{task.priority}</td>
