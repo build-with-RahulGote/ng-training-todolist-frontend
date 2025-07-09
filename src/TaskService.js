@@ -23,5 +23,13 @@ class TaskService{
   deleteTask(id) {
     return axios.delete(`${this.Base_url}/task/${id}`);
   }
+
+  searchTasks(keyword) {
+  return axios.get(`${this.Base_url}/tasks/search?keyword=${encodeURIComponent(keyword)}`);
+}
+
+getPaginatedTasks(page, size) {
+  return axios.get(`${this.Base_url}/tasks?page=${page}&size=${size}`);
+}
 }
 export default new TaskService();
