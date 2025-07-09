@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
+import TaskService from "../TaskService";
+
 
 const initialFormState = {
-  assignedTo: "",
+  assignTo: "",
   status: "Not Started",
   dueDate: "",
   priority: "Normal",
@@ -25,11 +27,24 @@ export default function TaskFormModal({ show, onClose, onSave, mode = "create", 
   };
 
   const handleSubmit = () => {
+  if (mode === "edit") {
     onSave(taskData);
     setTaskData(initialFormState);
     onClose();
-  };
-
+  } else {
+    TaskService.createTask(taskData)
+      .then((res) => {
+        console.log("Task created:", res.data);
+        onSave(res.data);
+        setTaskData(initialFormState);
+        onClose();
+      })
+      .catch((err) => {
+        console.error("Error creating task:", err);
+        alert("Failed to create task.");
+      });
+  }
+};
   return (
     <div
       className={`modal fade ${show ? "show d-block" : "d-none"}`}
@@ -53,15 +68,15 @@ export default function TaskFormModal({ show, onClose, onSave, mode = "create", 
                   </label>
                   <select
                     className="form-select"
-                    name="assignedTo"
-                    value={taskData.assignedTo}
+                    name="assignTo"
+                    value={taskData.assignTo}
                     onChange={handleChange}
                   >
                     <option value="">Select</option>
-                    <option>User 1</option>
-                    <option>User 2</option>
-                    <option>User 3</option>
-                    <option>User 4</option>
+                    <option value="User 1">User 1</option>
+                     <option value="User 2">User 2</option>
+                    <option value="User 3">User 3</option>
+                    <option value="User 4">User 4</option>
                   </select>
                 </div>
 
